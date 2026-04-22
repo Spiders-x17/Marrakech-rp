@@ -1,204 +1,275 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>Marrakech RP PRO</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marrakech RP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #ecf0f1;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
 
-<style>
-body {
-  margin:0;
-  font-family:Arial;
-  background:black;
-  color:white;
-  text-align:center;
-}
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a252f;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
 
-/* GTA LOADING SCREEN */
-#loading {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background: url('https://wallpapercave.com/wp/wp2757874.jpg') center/cover;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-}
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #34495e;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
 
-.loading-box {
-  background:rgba(0,0,0,0.7);
-  padding:20px;
-  border:1px solid #00aaff;
-  border-radius:10px;
-}
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-.bar {
-  width:200px;
-  height:10px;
-  border:1px solid #00aaff;
-  margin-top:10px;
-}
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
 
-.progress {
-  height:100%;
-  width:0%;
-  background:#00aaff;
-  animation:load 3s forwards;
-}
+        .header {
+            background: rgba(52, 73, 94, 0.9);
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
 
-@keyframes load {
-  0%{width:0%}
-  100%{width:100%}
-}
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #3498db, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
 
-/* MAIN */
-#app {
-  display:none;
-  padding:20px;
-}
+        @keyframes glow {
+            from { text-shadow: 0 0 20px #3498db; }
+            to { text-shadow: 0 0 30px #e74c3c; }
+        }
 
-h1 {
-  color:#00aaff;
-}
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.8;
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
 
-/* LOGIN */
-input {
-  padding:10px;
-  margin:5px;
-  width:200px;
-}
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
 
-button {
-  padding:10px;
-  background:#00aaff;
-  border:none;
-  cursor:pointer;
-}
+        .login-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-/* LEADERBOARD */
-.table {
-  width:300px;
-  margin:20px auto;
-  border:1px solid #00aaff;
-}
+        .login-box {
+            background: rgba(44, 62, 80, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
 
-.row {
-  display:flex;
-  justify-content:space-between;
-  padding:5px;
-  border-bottom:1px solid #222;
-}
+        .login-btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
 
-/* BUTTON */
-.btn {
-  display:block;
-  width:200px;
-  margin:10px auto;
-  padding:10px;
-  border:1px solid #00aaff;
-  text-decoration:none;
-  color:white;
-}
-</style>
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        }
+
+        .contacts {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item {
+            display: inline-block;
+            margin: 15px;
+            padding: 20px;
+            background: rgba(52, 73, 94, 0.5);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .contact-item:hover {
+            background: rgba(52, 152, 219, 0.3);
+            border-color: #3498db;
+            transform: scale(1.05);
+        }
+
+        .contact-name {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .contact-number {
+            font-size: 1.3em;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .whatsapp-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 2em; }
+            .login-box { padding: 20px; margin: 10px; }
+            .contact-item { display: block; margin: 10px auto; }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <div style="font-size: 1.5em;">Loading...</div>
+    </div>
 
-<!-- GTA LOADING -->
-<div id="loading">
-  <div class="loading-box">
-    <h2>GTA RP Loading</h2>
-    <div class="bar"><div class="progress"></div></div>
-  </div>
-</div>
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <div class="title" id="dynamicTitle">Marrakech RP</div>
+            <div class="subtitle" id="welcomeText">Welcome To Marrakech</div>
+        </div>
 
-<!-- APP -->
-<div id="app">
+        <!-- Login Section -->
+        <div class="login-section">
+            <div class="login-box">
+                <h2>تسجيل الدخول</h2>
+                <button class="login-btn" onclick="login()">دخول</button>
+                <audio id="loginSound" preload="auto">
+                    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSq+0/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSq+0/" type="audio/wav">
+                </audio>
+            </div>
+        </div>
 
-<h1>Welcome To Marrakech RP</h1>
+        <!-- Contacts -->
+        <div class="contacts">
+            <h3>اتصل بنا</h3>
+            <div class="contact-item" onclick="openWhatsApp('DEV_MOSTAFA', '775002021', 'MOSTAFA')">
+                <div class="contact-name">DEV_MOSTAFA</div>
+                <div class="contact-number">775-002021</div>
+            </div>
+            <div class="contact-item" onclick="openWhatsApp('SPIDERS_X17', '645987253', 'Spiders')">
+                <div class="contact-name">SPIDERS_X17</div>
+                <div class="contact-number">645-987253</div>
+            </div>
+            <div style="margin-top: 20px;">
+                <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" 
+                   target="_blank" class="login-btn" style="font-size: 1em; padding: 10px 30px;">
+                   مجموعة السيرفر
+                </a>
+            </div>
+        </div>
+    </div>
 
-<div id="login">
-  <input id="name" placeholder="Username">
-  <input id="score" placeholder="Score (RP Level)">
-  <br>
-  <button onclick="login()">Login</button>
-</div>
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+                document.getElementById('mainContent').style.opacity = '1';
+                playSound('loginSound');
+                startTitleAnimation();
+            }, 2000);
+        });
 
-<h3 id="player"></h3>
+        // Dynamic Title Animation
+        function startTitleAnimation() {
+            const titles = ['Marrakech RP', 'Welcome To Marrakech'];
+            let index = 0;
+            const titleEl = document.getElementById('dynamicTitle');
+            const welcomeEl = document.getElementById('welcomeText');
 
-<!-- LEADERBOARD -->
-<h2>🏆 Leaderboard</h2>
-<div class="table" id="board"></div>
+            setInterval(() => {
+                titleEl.textContent = titles[index];
+                welcomeEl.textContent = titles[1 - index];
+                index = 1 - index;
+            }, 3000);
+        }
 
-<a class="btn" href="samp://127.0.0.1:7777">🚀 Enter Server</a>
+        // Login Function
+        function login() {
+            playSound('loginSound');
+            alert('تم تسجيل الدخول بنجاح! 🎮');
+        }
 
-</div>
+        // WhatsApp Function
+        function openWhatsApp(name, number, username) {
+            const message = `مرحبا صديقي "${username}" لقد جئت من موقعكم`;
+            const whatsappUrl = `https://wa.me/212${number}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
 
-<script>
-
-/* loading */
-setTimeout(()=>{
-  document.getElementById("loading").style.display="none";
-  document.getElementById("app").style.display="block";
-},3000);
-
-/* LOGIN + SAVE */
-function login(){
-  let name=document.getElementById("name").value;
-  let score=document.getElementById("score").value;
-
-  if(!name) return;
-
-  localStorage.setItem("player",name);
-  localStorage.setItem("score",score||0);
-
-  loadPlayer();
-  updateBoard();
-}
-
-/* PLAYER */
-function loadPlayer(){
-  let name=localStorage.getItem("player");
-  let score=localStorage.getItem("score");
-
-  if(name){
-    document.getElementById("player").innerText=
-    "Player: "+name+" | Level: "+score;
-  }
-}
-
-/* LEADERBOARD SYSTEM */
-function updateBoard(){
-  let players=[
-    {n:"Mostafa",s:99},
-    {n:"Spiders",s:95},
-    {n:localStorage.getItem("player")||"Guest",s:localStorage.getItem("score")||0}
-  ];
-
-  players.sort((a,b)=>b.s-a.s);
-
-  let html="";
-  players.forEach(p=>{
-    html+=`
-      <div class="row">
-        <span>${p.n}</span>
-        <span>${p.s}</span>
-      </div>
-    `;
-  });
-
-  document.getElementById("board").innerHTML=html;
-}
-
-loadPlayer();
-updateBoard();
-
-</script>
-
+        // Sound Function
+        function playSound(soundId) {
+            const audio = document.getElementById(soundId);
+            audio.currentTime = 0;
+            audio.play().catch(e => console.log('Sound play failed:', e));
+        }
+    </script>
 </body>
 </html>
