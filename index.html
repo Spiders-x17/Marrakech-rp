@@ -12,20 +12,20 @@ body {
   background: #050505;
   color: white;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
-/* LOADING SCREEN */
+/* LOADING */
 #loading {
   position: fixed;
   width: 100%;
   height: 100%;
   background: black;
-  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  z-index: 9999;
 }
 
 .loader {
@@ -41,7 +41,7 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* BACKGROUND CANVAS */
+/* PARTICLES */
 canvas {
   position: fixed;
   top: 0;
@@ -56,10 +56,17 @@ canvas {
   margin-top: 90px;
 }
 
+/* TITLE ANIMATION */
 h1 {
   font-size: 45px;
   color: #00aaff;
   text-shadow: 0 0 15px #00aaff;
+  animation: fade 2s ease-in-out;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 p {
@@ -84,40 +91,71 @@ p {
   background: #00aaff;
   color: black;
   transform: scale(1.05);
-  box-shadow: 0 0 20px #00aaff;
 }
 
-/* ENTER SERVER BUTTON */
+/* ENTER SERVER */
 .enter {
-  background: rgba(0,255,100,0.1);
   border: 1px solid #00ff99;
 }
 
 .enter:hover {
   background: #00ff99;
-  box-shadow: 0 0 25px #00ff99;
 }
 
 /* SOUND BUTTON */
 .sound-btn {
   position: fixed;
   bottom: 80px;
-  right: 15px;
+  right: 10px;
   background: #00aaff;
   border: none;
   padding: 10px;
   border-radius: 10px;
   cursor: pointer;
-  z-index: 3;
 }
 
-/* bottom text */
+/* QURAN */
+.quran-section {
+  margin-top: 40px;
+}
+
+.quran-section h2 {
+  color: #00aaff;
+}
+
+.quran-images img {
+  width: 140px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid #00aaff;
+}
+
+/* RECITERS */
+.reciter {
+  width: 280px;
+  margin: 10px auto;
+  padding: 10px;
+  border: 1px solid #00aaff;
+  border-radius: 10px;
+  background: rgba(0,170,255,0.05);
+}
+
+/* BOTTOM TEXT */
 .bottom {
   position: fixed;
   bottom: 60px;
   width: 100%;
   color: #00aaff;
   font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+  position: fixed;
+  bottom: 10px;
+  width: 100%;
+  font-size: 13px;
+  color: #666;
 }
 </style>
 </head>
@@ -127,10 +165,10 @@ p {
 <!-- LOADING -->
 <div id="loading">
   <div class="loader"></div>
-  <p style="margin-top:15px;">Loading Marrakech RP...</p>
+  <p>Loading Marrakech RP...</p>
 </div>
 
-<!-- PARTICLES CANVAS -->
+<!-- PARTICLES -->
 <canvas id="canvas"></canvas>
 
 <div class="container">
@@ -139,18 +177,46 @@ p {
   <p>Official RP Server</p>
 
   <!-- ENTER SERVER -->
-  <a class="btn enter" href="samp://YOUR-SERVER-IP:7777">
+  <a class="btn enter" href="samp://YOUR-IP:7777">
     🚀 Enter Server
   </a>
 
-  <!-- WhatsApp -->
-  <a class="btn" href="https://wa.me/212775002021?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Mostafa%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85" target="_blank">
+  <!-- WHATSAPP -->
+  <a class="btn" href="https://wa.me/212775002021?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Mostafa%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83" target="_blank">
     Chat MOSTAFA
   </a>
 
-  <a class="btn" href="https://wa.me/212645987253?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Spiders%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85" target="_blank">
+  <a class="btn" href="https://wa.me/212645987253?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Spiders%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83" target="_blank">
     Chat SPIDERS
   </a>
+
+  <!-- QURAN -->
+  <div class="quran-section">
+
+    <h2>📖 القرآن الكريم</h2>
+
+    <div class="quran-images">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Quran-kareem.jpg">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Al-Quran.jpg">
+    </div>
+
+    <h2>🎧 قرّاء مشهورين</h2>
+
+    <div class="reciter">
+      <p>عبد الباسط</p>
+      <audio controls>
+        <source src="https://server7.mp3quran.net/basit/001.mp3">
+      </audio>
+    </div>
+
+    <div class="reciter">
+      <p>مشاري العفاسي</p>
+      <audio controls>
+        <source src="https://server8.mp3quran.net/afs/001.mp3">
+      </audio>
+    </div>
+
+  </div>
 
 </div>
 
@@ -158,27 +224,24 @@ p {
   للتواصل معنا اضغط على الأزرار ☝️
 </div>
 
-<!-- SOUND BUTTON -->
-<button class="sound-btn" onclick="playSound()">🔊 Play Sound</button>
+<button class="sound-btn" onclick="document.getElementById('sound').play()">🔊 Sound</button>
 
-<!-- SOUND -->
 <audio id="sound">
-  <source src="https://www.myinstants.com/media/sounds/gta-san-andreas-theme.mp3" type="audio/mpeg">
+  <source src="https://www.myinstants.com/media/sounds/gta-san-andreas-theme.mp3">
 </audio>
+
+<footer>
+  SUBSCRIBE: Spidersyt | mostafachargami
+</footer>
 
 <script>
 
-/* LOADING SCREEN */
+/* LOADING */
 window.onload = function() {
   setTimeout(() => {
     document.getElementById("loading").style.display = "none";
   }, 2000);
 };
-
-/* SOUND */
-function playSound() {
-  document.getElementById("sound").play();
-}
 
 /* PARTICLES */
 const canvas = document.getElementById("canvas");
@@ -189,31 +252,29 @@ canvas.height = window.innerHeight;
 
 let particles = [];
 
-for (let i = 0; i < 80; i++) {
+for(let i=0;i<70;i++){
   particles.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 2,
-    d: Math.random() * 1
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*2
   });
 }
 
-function draw() {
+function draw(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = "#00aaff";
+  ctx.fillStyle="#00aaff";
 
-  for (let i = 0; i < particles.length; i++) {
-    let p = particles[i];
+  particles.forEach(p=>{
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
     ctx.fill();
-    p.y += p.d;
-
-    if (p.y > canvas.height) {
-      p.y = 0;
-      p.x = Math.random() * canvas.width;
+    p.y += 0.5;
+    if(p.y>canvas.height){
+      p.y=0;
+      p.x=Math.random()*canvas.width;
     }
-  }
+  });
+
   requestAnimationFrame(draw);
 }
 draw();
