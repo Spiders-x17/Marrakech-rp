@@ -5,270 +5,214 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marrakech RP</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #2c3e50, #34495e);
-            color: #ecf0f1;
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow: hidden;
-            position: relative;
         }
 
-        .loading-screen {
+        /* Loading Screen */
+        #loading {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #1a252f;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #1a1a1a;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s ease;
+            z-index: 9999;
+            transition: opacity 0.5s;
         }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #34495e;
-            border-top: 4px solid #3498db;
+        
+        .loader {
+            width: 50px; height: 50px;
+            border: 3px solid #333;
+            border-top: 3px solid #e63946;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 20px;
         }
-
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
+        #loading p { margin-top: 20px; color: #e63946; font-size: 18px; }
 
-        .header {
-            background: rgba(52, 73, 94, 0.9);
-            padding: 20px;
+        /* Main Container */
+        .container {
+            display: none;
+            background: #2a2a2a;
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
             text-align: center;
-            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        .title {
-            font-size: 2.5em;
+        /* Animated Title */
+        #title {
+            font-size: 32px;
             font-weight: bold;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #3498db, #e74c3c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: glow 2s ease-in-out infinite alternate;
+            color: #e63946;
+            margin-bottom: 30px;
+            height: 40px;
         }
 
-        @keyframes glow {
-            from { text-shadow: 0 0 20px #3498db; }
-            to { text-shadow: 0 0 30px #e74c3c; }
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.8;
-            animation: fadeInOut 3s ease-in-out infinite;
-        }
-
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
-        .login-section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .login-box {
-            background: rgba(44, 62, 80, 0.8);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-
-        .login-btn {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
-            border-radius: 50px;
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            background: #333;
+            color: #fff;
+            border: 1px solid #e63946;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        
+        .btn:hover {
+            background: #e63946;
+            transform: translateY(-2px);
         }
 
-        .login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+        .btn-group {
+            margin: 20px 0;
         }
 
-        .contacts {
-            background: rgba(44, 62, 80, 0.9);
-            padding: 30px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .contact-item {
-            display: inline-block;
-            margin: 15px;
-            padding: 20px;
-            background: rgba(52, 73, 94, 0.5);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .contact-item:hover {
-            background: rgba(52, 152, 219, 0.3);
-            border-color: #3498db;
-            transform: scale(1.05);
-        }
-
-        .contact-name {
-            font-weight: bold;
-            font-size: 1.1em;
+        .btn-label {
+            font-size: 14px;
+            color: #aaa;
             margin-bottom: 5px;
         }
 
-        .contact-number {
-            font-size: 1.3em;
-            color: #3498db;
-            font-weight: bold;
+        /* Login Form */
+        #loginForm {
+            display: none;
+            margin-top: 20px;
         }
-
-        .whatsapp-link {
-            text-decoration: none;
-            color: inherit;
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 15px;
         }
-
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 768px) {
-            .title { font-size: 2em; }
-            .login-box { padding: 20px; margin: 10px; }
-            .contact-item { display: block; margin: 10px auto; }
+        
+        input:focus {
+            outline: none;
+            border-color: #e63946;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="spinner"></div>
-        <div style="font-size: 1.5em;">Loading...</div>
+    <!-- Loading -->
+    <div id="loading">
+        <div class="loader"></div>
+        <p>جاري التحميل...</p>
     </div>
 
+    <!-- Sound Effect -->
+    <audio id="clickSound" preload="auto">
+        <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
+    </audio>
+
     <!-- Main Content -->
-    <div class="main-content" id="mainContent">
-        <!-- Header -->
-        <div class="header">
-            <div class="title" id="dynamicTitle">Marrakech RP</div>
-            <div class="subtitle" id="welcomeText">Welcome To Marrakech</div>
+    <div class="container" id="mainContent">
+        <h1 id="title">Marrakech RP</h1>
+        
+        <button class="btn" onclick="playSound(); showLogin()">تسجيل الدخول</button>
+        
+        <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" class="btn" onclick="playSound()" target="_blank">
+            مجموعة السيرفر
+        </a>
+
+        <div class="btn-group">
+            <div class="btn-label">DEV_MOSTAFA</div>
+            <a href="https://wa.me/212775002021?text=مرحبا%20صديقي%20%22MOSTAFA%22%20لقد%20جئت%20من%20موقعكم" 
+               class="btn" onclick="playSound()" target="_blank">
+                775-002021
+            </a>
         </div>
 
-        <!-- Login Section -->
-        <div class="login-section">
-            <div class="login-box">
-                <h2>تسجيل الدخول</h2>
-                <button class="login-btn" onclick="login()">دخول</button>
-                <audio id="loginSound" preload="auto">
-                    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSq+0/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSq+0/" type="audio/wav">
-                </audio>
-            </div>
+        <div class="btn-group">
+            <div class="btn-label">SPIDERS_X17</div>
+            <a href="https://wa.me/212645987253?text=مرحبا%20صديقي%20%22Spiders%22%20لقد%20جئت%20من%20موقعكم" 
+               class="btn" onclick="playSound()" target="_blank">
+                645-987253
+            </a>
         </div>
 
-        <!-- Contacts -->
-        <div class="contacts">
-            <h3>اتصل بنا</h3>
-            <div class="contact-item" onclick="openWhatsApp('DEV_MOSTAFA', '775002021', 'MOSTAFA')">
-                <div class="contact-name">DEV_MOSTAFA</div>
-                <div class="contact-number">775-002021</div>
-            </div>
-            <div class="contact-item" onclick="openWhatsApp('SPIDERS_X17', '645987253', 'Spiders')">
-                <div class="contact-name">SPIDERS_X17</div>
-                <div class="contact-number">645-987253</div>
-            </div>
-            <div style="margin-top: 20px;">
-                <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" 
-                   target="_blank" class="login-btn" style="font-size: 1em; padding: 10px 30px;">
-                   مجموعة السيرفر
-                </a>
-            </div>
+        <!-- Login Form -->
+        <div id="loginForm">
+            <input type="text" id="username" placeholder="اسم المستخدم">
+            <input type="password" id="password" placeholder="كلمة المرور">
+            <button class="btn" onclick="playSound(); login()">دخول</button>
         </div>
     </div>
 
     <script>
         // Loading Screen
-        window.addEventListener('load', function() {
+        window.onload = function() {
             setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-                document.getElementById('mainContent').style.opacity = '1';
-                playSound('loginSound');
-                startTitleAnimation();
-            }, 2000);
-        });
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                }, 500);
+            }, 1500);
+        };
 
-        // Dynamic Title Animation
-        function startTitleAnimation() {
-            const titles = ['Marrakech RP', 'Welcome To Marrakech'];
-            let index = 0;
-            const titleEl = document.getElementById('dynamicTitle');
-            const welcomeEl = document.getElementById('welcomeText');
+        // Animated Title
+        const title = document.getElementById('title');
+        let isFirst = true;
+        setInterval(() => {
+            title.style.opacity = '0';
+            setTimeout(() => {
+                title.textContent = isFirst ? 'Welcome To Marrakech' : 'Marrakech RP';
+                title.style.opacity = '1';
+                isFirst = !isFirst;
+            }, 300);
+        }, 3000);
 
-            setInterval(() => {
-                titleEl.textContent = titles[index];
-                welcomeEl.textContent = titles[1 - index];
-                index = 1 - index;
-            }, 3000);
+        // Sound Effect
+        function playSound() {
+            document.getElementById('clickSound').play();
+        }
+
+        // Show Login
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
         }
 
         // Login Function
         function login() {
-            playSound('loginSound');
-            alert('تم تسجيل الدخول بنجاح! 🎮');
-        }
-
-        // WhatsApp Function
-        function openWhatsApp(name, number, username) {
-            const message = `مرحبا صديقي "${username}" لقد جئت من موقعكم`;
-            const whatsappUrl = `https://wa.me/212${number}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-
-        // Sound Function
-        function playSound(soundId) {
-            const audio = document.getElementById(soundId);
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log('Sound play failed:', e));
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if(user && pass) {
+                alert('مرحبا ' + user + ' ! تم تسجيل الدخول بنجاح');
+                playSound();
+            } else {
+                alert('المرجو ملء جميع الخانات');
+            }
         }
     </script>
 </body>
