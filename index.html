@@ -1,85 +1,143 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <title>Marrakech RP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Marrakech RP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0a0a0a;
-      color: white;
-      text-align: center;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #050505, #0a0a0a, #111);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
 
-    .container {
-      margin-top: 100px;
-    }
+/* animation background glow */
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0,170,255,0.08), transparent 60%);
+  animation: moveGlow 8s linear infinite;
+  z-index: 0;
+}
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-      color: #00aaff;
-    }
+@keyframes moveGlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
-    p {
-      color: #aaa;
-      margin-bottom: 40px;
-    }
+.container {
+  margin-top: 120px;
+  position: relative;
+  z-index: 1;
+}
 
-    .btn {
-      display: block;
-      width: 250px;
-      margin: 15px auto;
-      padding: 15px;
-      text-decoration: none;
-      color: white;
-      border: 1px solid #00aaff;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
+h1 {
+  font-size: 45px;
+  color: #00aaff;
+  text-shadow: 0 0 10px #00aaff;
+  animation: fadeIn 1.2s ease-in-out;
+}
 
-    .btn:hover {
-      background: #00aaff;
-      color: black;
-    }
+p {
+  color: #aaa;
+  margin-bottom: 40px;
+  animation: fadeIn 1.5s ease-in-out;
+}
 
-    footer {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      font-size: 14px;
-      color: #666;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    footer span {
-      display: block;
-      margin: 5px;
-    }
-  </style>
+/* BUTTONS */
+.btn {
+  display: block;
+  width: 260px;
+  margin: 15px auto;
+  padding: 15px;
+  text-decoration: none;
+  color: white;
+  border: 1px solid #00aaff;
+  border-radius: 10px;
+  background: rgba(0,170,255,0.05);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+}
+
+/* hover glow */
+.btn:hover {
+  background: #00aaff;
+  color: black;
+  box-shadow: 0 0 20px #00aaff;
+  transform: scale(1.05);
+}
+
+/* click animation */
+.btn:active {
+  transform: scale(0.92);
+}
+
+/* shine effect */
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+footer {
+  position: fixed;
+  bottom: 15px;
+  width: 100%;
+  font-size: 13px;
+  color: #666;
+  z-index: 1;
+}
+
+footer span {
+  display: block;
+  margin: 3px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Marrakech RP</h1>
-    <p>Welcome to the Marrakech official server page</p>
+<div class="container">
+  <h1>Marrakech RP</h1>
+  <p>Welcome to the official RP server page</p>
 
-    <a class="btn" href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" target="_blank">
-      WhatsApp Group
-    </a>
+  <a class="btn" href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" target="_blank">
+    WhatsApp Group
+  </a>
 
-    <a class="btn" href="https://samp.com" target="_blank">
-      Play SA-MP
-    </a>
-  </div>
+  <a class="btn" href="https://samp.com" target="_blank">
+    Play SA-MP
+  </a>
+</div>
 
-  <footer>
-    <span>SUBSCRIBE: Spidersyt</span>
-    <span>SUBSCRIBE: mostafachargami</span>
-  </footer>
+<footer>
+  <span>SUBSCRIBE: Spidersyt</span>
+  <span>SUBSCRIBE: mostafachargami</span>
+</footer>
 
 </body>
-  </html>
+</html>
