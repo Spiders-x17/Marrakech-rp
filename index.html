@@ -9,50 +9,67 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #050505, #0a0a0a, #111);
+  background: #050505;
   color: white;
   text-align: center;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-/* glow background */
-body::before {
-  content: "";
+/* LOADING SCREEN */
+#loading {
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0,170,255,0.08), transparent 60%);
-  animation: moveGlow 8s linear infinite;
-  z-index: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-@keyframes moveGlow {
-  0% { transform: rotate(0deg); }
+.loader {
+  border: 4px solid #222;
+  border-top: 4px solid #00aaff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
   100% { transform: rotate(360deg); }
 }
 
+/* BACKGROUND CANVAS */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* MAIN */
 .container {
-  margin-top: 100px;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  margin-top: 90px;
 }
 
 h1 {
   font-size: 45px;
   color: #00aaff;
-  text-shadow: 0 0 10px #00aaff;
+  text-shadow: 0 0 15px #00aaff;
 }
 
 p {
   color: #aaa;
-  margin-bottom: 30px;
 }
 
+/* BUTTONS */
 .btn {
   display: block;
-  width: 270px;
+  width: 280px;
   margin: 12px auto;
   padding: 15px;
   text-decoration: none;
@@ -61,66 +78,147 @@ p {
   border-radius: 10px;
   background: rgba(0,170,255,0.05);
   transition: 0.3s;
-  position: relative;
-  overflow: hidden;
 }
 
 .btn:hover {
   background: #00aaff;
   color: black;
-  box-shadow: 0 0 20px #00aaff;
   transform: scale(1.05);
+  box-shadow: 0 0 20px #00aaff;
 }
 
-.btn:active {
-  transform: scale(0.95);
+/* ENTER SERVER BUTTON */
+.enter {
+  background: rgba(0,255,100,0.1);
+  border: 1px solid #00ff99;
 }
 
-/* staff cards */
-.card {
-  width: 270px;
-  margin: 10px auto;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #00aaff;
-  background: rgba(0,170,255,0.05);
-  box-shadow: 0 0 10px rgba(0,170,255,0.2);
+.enter:hover {
+  background: #00ff99;
+  box-shadow: 0 0 25px #00ff99;
 }
 
-footer {
+/* SOUND BUTTON */
+.sound-btn {
   position: fixed;
-  bottom: 10px;
+  bottom: 80px;
+  right: 15px;
+  background: #00aaff;
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 3;
+}
+
+/* bottom text */
+.bottom {
+  position: fixed;
+  bottom: 60px;
   width: 100%;
-  font-size: 13px;
-  color: #666;
+  color: #00aaff;
+  font-size: 14px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOADING -->
+<div id="loading">
+  <div class="loader"></div>
+  <p style="margin-top:15px;">Loading Marrakech RP...</p>
+</div>
+
+<!-- PARTICLES CANVAS -->
+<canvas id="canvas"></canvas>
+
 <div class="container">
-  <h1>Marrakech RP</h1>
+
+  <h1>Welcome To Marrakech</h1>
   <p>Official RP Server</p>
 
-  <!-- WhatsApp links -->
-  <a class="btn" href="https://wa.me/212775002021?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22MOSTAFA%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85%20%D8%A7%D9%84%D8%AE%D8%A7%D8%B5" target="_blank">
-    DEV_MOSTAFA
+  <!-- ENTER SERVER -->
+  <a class="btn enter" href="samp://YOUR-SERVER-IP:7777">
+    🚀 Enter Server
   </a>
 
-  <a class="btn" href="https://wa.me/212645987253?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Spiders%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85%20%D8%A7%D9%84%D8%AE%D8%A7%D8%B5" target="_blank">
-    SPIDERS_X17
-  </a>.  https://wa.me/212775002021?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Spiders%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85%20%D8%A7%D9%84%D8%AE%D8%A7%D8%B5
-
-  <a class="btn" href="https://samp.com" target="_blank">
-    Play SA-MP
+  <!-- WhatsApp -->
+  <a class="btn" href="https://wa.me/212775002021?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Mostafa%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85" target="_blank">
+    Chat MOSTAFA
   </a>
 
+  <a class="btn" href="https://wa.me/212645987253?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Spiders%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83%D9%85" target="_blank">
+    Chat SPIDERS
+  </a>
 
-<footer>
-  <div>SUBSCRIBE: Spidersyt</div>
-  <div>SUBSCRIBE: mostafachargami</div>
-</footer>
+</div>
+
+<div class="bottom">
+  للتواصل معنا اضغط على الأزرار ☝️
+</div>
+
+<!-- SOUND BUTTON -->
+<button class="sound-btn" onclick="playSound()">🔊 Play Sound</button>
+
+<!-- SOUND -->
+<audio id="sound">
+  <source src="https://www.myinstants.com/media/sounds/gta-san-andreas-theme.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* LOADING SCREEN */
+window.onload = function() {
+  setTimeout(() => {
+    document.getElementById("loading").style.display = "none";
+  }, 2000);
+};
+
+/* SOUND */
+function playSound() {
+  document.getElementById("sound").play();
+}
+
+/* PARTICLES */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+for (let i = 0; i < 80; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2,
+    d: Math.random() * 1
+  });
+}
+
+function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "#00aaff";
+
+  for (let i = 0; i < particles.length; i++) {
+    let p = particles[i];
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2, true);
+    ctx.fill();
+    p.y += p.d;
+
+    if (p.y > canvas.height) {
+      p.y = 0;
+      p.x = Math.random() * canvas.width;
+    }
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+
+</script>
 
 </body>
 </html>
