@@ -2,282 +2,201 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>Marrakech RP</title>
+<title>Marrakech RP PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
 
 <style>
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #050505;
-  color: white;
-  text-align: center;
-  overflow-x: hidden;
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+  text-align:center;
 }
 
-/* LOADING */
+/* GTA LOADING SCREEN */
 #loading {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 9999;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background: url('https://wallpapercave.com/wp/wp2757874.jpg') center/cover;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
 
-.loader {
-  border: 4px solid #222;
-  border-top: 4px solid #00aaff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
+.loading-box {
+  background:rgba(0,0,0,0.7);
+  padding:20px;
+  border:1px solid #00aaff;
+  border-radius:10px;
 }
 
-@keyframes spin {
-  100% { transform: rotate(360deg); }
+.bar {
+  width:200px;
+  height:10px;
+  border:1px solid #00aaff;
+  margin-top:10px;
 }
 
-/* PARTICLES */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
+.progress {
+  height:100%;
+  width:0%;
+  background:#00aaff;
+  animation:load 3s forwards;
+}
+
+@keyframes load {
+  0%{width:0%}
+  100%{width:100%}
 }
 
 /* MAIN */
-.container {
-  position: relative;
-  z-index: 2;
-  margin-top: 90px;
+#app {
+  display:none;
+  padding:20px;
 }
 
-/* TITLE ANIMATION */
 h1 {
-  font-size: 45px;
-  color: #00aaff;
-  text-shadow: 0 0 15px #00aaff;
-  animation: fade 2s ease-in-out;
+  color:#00aaff;
 }
 
-@keyframes fade {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+/* LOGIN */
+input {
+  padding:10px;
+  margin:5px;
+  width:200px;
 }
 
-p {
-  color: #aaa;
+button {
+  padding:10px;
+  background:#00aaff;
+  border:none;
+  cursor:pointer;
 }
 
-/* BUTTONS */
+/* LEADERBOARD */
+.table {
+  width:300px;
+  margin:20px auto;
+  border:1px solid #00aaff;
+}
+
+.row {
+  display:flex;
+  justify-content:space-between;
+  padding:5px;
+  border-bottom:1px solid #222;
+}
+
+/* BUTTON */
 .btn {
-  display: block;
-  width: 280px;
-  margin: 12px auto;
-  padding: 15px;
-  text-decoration: none;
-  color: white;
-  border: 1px solid #00aaff;
-  border-radius: 10px;
-  background: rgba(0,170,255,0.05);
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #00aaff;
-  color: black;
-  transform: scale(1.05);
-}
-
-/* ENTER SERVER */
-.enter {
-  border: 1px solid #00ff99;
-}
-
-.enter:hover {
-  background: #00ff99;
-}
-
-/* SOUND BUTTON */
-.sound-btn {
-  position: fixed;
-  bottom: 80px;
-  right: 10px;
-  background: #00aaff;
-  border: none;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-/* QURAN */
-.quran-section {
-  margin-top: 40px;
-}
-
-.quran-section h2 {
-  color: #00aaff;
-}
-
-.quran-images img {
-  width: 140px;
-  margin: 5px;
-  border-radius: 10px;
-  border: 1px solid #00aaff;
-}
-
-/* RECITERS */
-.reciter {
-  width: 280px;
-  margin: 10px auto;
-  padding: 10px;
-  border: 1px solid #00aaff;
-  border-radius: 10px;
-  background: rgba(0,170,255,0.05);
-}
-
-/* BOTTOM TEXT */
-.bottom {
-  position: fixed;
-  bottom: 60px;
-  width: 100%;
-  color: #00aaff;
-  font-size: 14px;
-}
-
-/* FOOTER */
-footer {
-  position: fixed;
-  bottom: 10px;
-  width: 100%;
-  font-size: 13px;
-  color: #666;
+  display:block;
+  width:200px;
+  margin:10px auto;
+  padding:10px;
+  border:1px solid #00aaff;
+  text-decoration:none;
+  color:white;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADING -->
+<!-- GTA LOADING -->
 <div id="loading">
-  <div class="loader"></div>
-  <p>Loading Marrakech RP...</p>
-</div>
-
-<!-- PARTICLES -->
-<canvas id="canvas"></canvas>
-
-<div class="container">
-
-  <h1>Welcome To Marrakech</h1>
-  <p>Official RP Server</p>
-
-  <!-- ENTER SERVER -->
-  <a class="btn enter" href="samp://YOUR-IP:7777">
-    🚀 Enter Server
-  </a>
-
-  <!-- WHATSAPP -->
-  <a class="btn" href="https://wa.me/212775002021?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Mostafa%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83" target="_blank">
-    Chat MOSTAFA
-  </a>
-
-  <a class="btn" href="https://wa.me/212645987253?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%B5%D8%AF%D9%8A%D9%82%D9%8A%20%22Spiders%22%20%D9%84%D9%82%D8%AF%20%D8%AC%D8%A6%D8%AA%20%D9%85%D9%86%20%D9%85%D9%88%D9%82%D8%B9%D9%83" target="_blank">
-    Chat SPIDERS
-  </a>
-
-  <!-- QURAN -->
-  <div class="quran-section">
-
-    <h2>📖 القرآن الكريم</h2>
-
-    <div class="quran-images">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Quran-kareem.jpg">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/28/Al-Quran.jpg">
-    </div>
-
-    <h2>🎧 قرّاء مشهورين</h2>
-
-    <div class="reciter">
-      <p>عبد الباسط</p>
-      <audio controls>
-        <source src="https://server7.mp3quran.net/basit/001.mp3">
-      </audio>
-    </div>
-
-    <div class="reciter">
-      <p>مشاري العفاسي</p>
-      <audio controls>
-        <source src="https://server8.mp3quran.net/afs/001.mp3">
-      </audio>
-    </div>
-
+  <div class="loading-box">
+    <h2>GTA RP Loading</h2>
+    <div class="bar"><div class="progress"></div></div>
   </div>
-
 </div>
 
-<div class="bottom">
-  للتواصل معنا اضغط على الأزرار ☝️
+<!-- APP -->
+<div id="app">
+
+<h1>Welcome To Marrakech RP</h1>
+
+<div id="login">
+  <input id="name" placeholder="Username">
+  <input id="score" placeholder="Score (RP Level)">
+  <br>
+  <button onclick="login()">Login</button>
 </div>
 
-<button class="sound-btn" onclick="document.getElementById('sound').play()">🔊 Sound</button>
+<h3 id="player"></h3>
 
-<audio id="sound">
-  <source src="https://www.myinstants.com/media/sounds/gta-san-andreas-theme.mp3">
-</audio>
+<!-- LEADERBOARD -->
+<h2>🏆 Leaderboard</h2>
+<div class="table" id="board"></div>
 
-<footer>
-  SUBSCRIBE: Spidersyt | mostafachargami
-</footer>
+<a class="btn" href="samp://127.0.0.1:7777">🚀 Enter Server</a>
+
+</div>
 
 <script>
 
-/* LOADING */
-window.onload = function() {
-  setTimeout(() => {
-    document.getElementById("loading").style.display = "none";
-  }, 2000);
-};
+/* loading */
+setTimeout(()=>{
+  document.getElementById("loading").style.display="none";
+  document.getElementById("app").style.display="block";
+},3000);
 
-/* PARTICLES */
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+/* LOGIN + SAVE */
+function login(){
+  let name=document.getElementById("name").value;
+  let score=document.getElementById("score").value;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+  if(!name) return;
 
-let particles = [];
+  localStorage.setItem("player",name);
+  localStorage.setItem("score",score||0);
 
-for(let i=0;i<70;i++){
-  particles.push({
-    x: Math.random()*canvas.width,
-    y: Math.random()*canvas.height,
-    r: Math.random()*2
-  });
+  loadPlayer();
+  updateBoard();
 }
 
-function draw(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="#00aaff";
+/* PLAYER */
+function loadPlayer(){
+  let name=localStorage.getItem("player");
+  let score=localStorage.getItem("score");
 
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fill();
-    p.y += 0.5;
-    if(p.y>canvas.height){
-      p.y=0;
-      p.x=Math.random()*canvas.width;
-    }
+  if(name){
+    document.getElementById("player").innerText=
+    "Player: "+name+" | Level: "+score;
+  }
+}
+
+/* LEADERBOARD SYSTEM */
+function updateBoard(){
+  let players=[
+    {n:"Mostafa",s:99},
+    {n:"Spiders",s:95},
+    {n:localStorage.getItem("player")||"Guest",s:localStorage.getItem("score")||0}
+  ];
+
+  players.sort((a,b)=>b.s-a.s);
+
+  let html="";
+  players.forEach(p=>{
+    html+=`
+      <div class="row">
+        <span>${p.n}</span>
+        <span>${p.s}</span>
+      </div>
+    `;
   });
 
-  requestAnimationFrame(draw);
+  document.getElementById("board").innerHTML=html;
 }
-draw();
+
+loadPlayer();
+updateBoard();
 
 </script>
 
