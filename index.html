@@ -18,7 +18,18 @@
             background: #000;
         }
 
-        /* فيديو جامع الفنا فالخلفية */
+        /* صورة احتياطية يلا ما خدمش الفيديو */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=1920&q=80') center/cover;
+            z-index: -4;
+            opacity: 0.4;
+        }
+
+        /* فيديو جامع الفنا - رابط جديد خدام */
         #bgVideo {
             position: fixed;
             top: 50%; left: 50%;
@@ -26,20 +37,19 @@
             transform: translate(-50%, -50%);
             z-index: -3;
             object-fit: cover;
-            opacity: 0.4;
+            opacity: 0.45;
         }
 
-        /* طبقة غامقة + لون أحمر خفيف */
+        /* طبقة غامقة */
         body::after {
             content: '';
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(193,18,31,0.15) 50%, rgba(0,0,0,0.9) 100%);
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(193,18,31,0.1) 50%, rgba(0,0,0,0.9) 100%);
             z-index: -2;
         }
 
-        /* Loading */
         #loading {
             position: fixed;
             top: 0; left: 0;
@@ -71,15 +81,8 @@
             color: #c1121f; 
             font-size: 18px;
             letter-spacing: 2px;
-            animation: pulse 1.5s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* المحتوى */
         .container {
             display: none;
             background: rgba(10, 10, 10, 0.88);
@@ -99,7 +102,7 @@
             color: #c1121f;
             margin-bottom: 30px;
             height: 40px;
-            text-shadow: 0 0 20px rgba(193, 18, 31, 1), 0 0 40px rgba(193, 18, 31, 0.6);
+            text-shadow: 0 0 20px rgba(193, 18, 31, 1);
             transition: opacity 0.4s;
         }
 
@@ -126,18 +129,42 @@
             transition: 0.3s;
         }
         
-        .btn:hover {
+        .btn:hover, .btn:active {
             background: #c1121f;
             border-color: #c1121f;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(193, 18, 31, 0.6);
+            transform: scale(0.98);
         }
 
         .btn-download {
             background: linear-gradient(145deg, #c1121f, #8b0000);
             border: 1px solid #ff1a1a;
-            animation: glow 2s infinite;
         }
 
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(193,
+        .btn-group { margin: 18px 0; }
+
+        .btn-label {
+            font-size: 13px;
+            color: #c1121f;
+            margin-bottom: 5px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .server-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- فيديو جامع الفنا - رابط جديد -->
+    <video autoplay muted loop playsinline id="bgVideo" poster="https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=1920&q=80">
+        <source src="https://cdn.pixabay.com/video/2021/04/28/72480-543865272_large.mp4" type="video/mp4">
+    </video>
+
+    <!-- صوت GTA V -->
+    <audio id="bgSound" loop>
+        <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?track=340525" type="audio/m
