@@ -9,158 +9,287 @@
 body{
   margin:0;
   font-family:Arial, sans-serif;
-  color:white;
   overflow:hidden;
   background:black;
+  color:white;
 }
 
-/* Loading Screen */
-#loading{
+/* BACKGROUND VIDEOS */
+.bg-video{
   position:fixed;
   top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:0.25;
+  z-index:-5;
+}
+
+.bg-video2{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:0.12;
+  filter:blur(2px);
+  z-index:-6;
+}
+
+/* PARTICLES */
+#particles{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  z-index:-2;
+}
+
+/* LOADING */
+#loading{
+  position:fixed;
+  width:100%;height:100%;
+  background:black;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.loader{
+  width:60px;height:60px;
+  border:5px solid #222;
+  border-top:5px solid #00c2ff;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{100%{transform:rotate(360deg)}}
+
+/* INTRO (FIVEM STYLE) */
+#intro{
+  position:fixed;
   width:100%;height:100%;
   background:black;
   display:flex;
   justify-content:center;
   align-items:center;
-  z-index:999;
   flex-direction:column;
+  z-index:9998;
+  animation:fadeOut 5s forwards;
 }
 
-.loader{
-  border:4px solid #333;
-  border-top:4px solid #00c2ff;
-  border-radius:50%;
-  width:50px;
-  height:50px;
-  animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-  0%{transform:rotate(0deg)}
-  100%{transform:rotate(360deg)}
-}
-
-/* Background video */
-video{
-  position:fixed;
-  right:0;
-  bottom:0;
-  min-width:100%;
-  min-height:100%;
-  object-fit:cover;
-  opacity:0.25;
-  z-index:-1;
-}
-
-.header{
-  text-align:center;
-  padding-top:30px;
-  font-size:28px;
+.logo{
+  font-size:40px;
   font-weight:bold;
-  letter-spacing:2px;
-}
-
-#changingText{
-  margin-top:10px;
-  font-size:18px;
+  letter-spacing:6px;
   color:#00c2ff;
+  text-shadow:0 0 20px #00c2ff;
+  animation:pulse 2s infinite;
 }
 
-.container{
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+  100%{transform:scale(1)}
+}
+
+@keyframes fadeOut{
+  0%{opacity:1}
+  80%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+
+/* LOGIN SCREEN */
+#login{
+  position:fixed;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:9997;
+}
+
+.login-box{
+  background:rgba(0,0,0,0.6);
   padding:20px;
+  border-radius:12px;
+  width:280px;
+  backdrop-filter:blur(10px);
+  border:1px solid #00c2ff55;
   text-align:center;
 }
 
-.card{
-  background:rgba(0,0,0,0.5);
-  margin:10px auto;
-  padding:15px;
-  border-radius:10px;
-  width:90%;
-  max-width:350px;
-}
-
-a{
-  color:#00c2ff;
-  text-decoration:none;
+input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+  outline:none;
 }
 
 button{
+  width:100%;
+  padding:10px;
   background:#00c2ff;
   border:none;
-  padding:10px;
   border-radius:8px;
-  color:black;
   font-weight:bold;
-  margin-top:10px;
-  width:100%;
 }
+
+/* HEADER */
+.header{
+  position:fixed;
+  top:15px;
+  width:100%;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
+  text-shadow:0 0 15px #00c2ff;
+}
+
+#changingText{
+  margin-top:60px;
+  text-align:center;
+  color:#00c2ff;
+}
+
+/* UI */
+.ui{
+  position:absolute;
+  bottom:40px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:rgba(0,0,0,0.6);
+  padding:15px;
+  border-radius:12px;
+  width:220px;
+  backdrop-filter:blur(6px);
+  border:1px solid #00c2ff55;
+}
+
+a{color:#00c2ff;text-decoration:none;font-weight:bold;}
+
 </style>
 </head>
 <body>
 
-<!-- Loading -->
-<div id="loading">
-  <div class="loader"></div>
-  <p>Loading Marrakech RP...</p>
-</div>
-
-<!-- Background Video -->
-<video autoplay muted loop>
-  <source src="marrakech.mp4" type="video/mp4">
+<!-- BACKGROUND -->
+<video class="bg-video" autoplay muted loop>
+  <source src="marrakech_city.mp4" type="video/mp4">
 </video>
 
-<!-- Sound -->
-<audio autoplay loop>
-  <source src="sound.mp3" type="audio/mp3">
+<video class="bg-video2" autoplay muted loop>
+  <source src="tour_marrakech.mp4" type="video/mp4">
+</video>
+
+<!-- INTRO GTA STYLE -->
+<div id="intro">
+  <div class="logo">MARRAKECH RP</div>
+  <p>Entering Server...</p>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="login">
+  <div class="login-box">
+    <h3>LOGIN</h3>
+    <input type="text" placeholder="Username">
+    <input type="password" placeholder="Password">
+    <button onclick="enterServer()">ENTER SERVER</button>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="loader"></div>
+  <p>Loading GTA RP Experience...</p>
+</div>
+
+<!-- SOUND (GTA STYLE PLACEHOLDER) -->
+<audio id="gtaSound" autoplay>
+  <source src="gta_intro.mp3" type="audio/mp3">
 </audio>
 
-<div class="header">Marrakech RP</div>
+<!-- PARTICLES -->
+<canvas id="particles"></canvas>
+
+<div class="header">MARRAKECH RP</div>
 <div id="changingText">Welcome To Marrakech</div>
 
-<div class="container">
-
+<div class="ui">
   <div class="card">
-    <h3>Group WhatsApp</h3>
-    <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" target="_blank">
-      Join Server Group
-    </a>
+    <h3>WhatsApp Group</h3>
+    <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" target="_blank">Join Server</a>
   </div>
 
   <div class="card">
     <h3>DEV_MOSTAFA</h3>
     <p>775-002021</p>
-    <a href="https://wa.me/775002021?text=مرحبا%20صديقي%20MOSTAFA%20لقد%20جئت%20من%20موقعكم" target="_blank">
-      Message on WhatsApp
-    </a>
+    <a href="https://wa.me/775002021?text=مرحبا%20صديقي%20MOSTAFA%20لقد%20جئت%20من%20موقعكم" target="_blank">Message</a>
   </div>
 
   <div class="card">
     <h3>SPIDERS_X17</h3>
     <p>645-987253</p>
-    <a href="https://wa.me/645987253?text=مرحبا%20صديقي%20Spiders%20لقد%20جئت%20من%20موقعكم" target="_blank">
-      Message on WhatsApp
-    </a>
+    <a href="https://wa.me/645987253?text=مرحبا%20صديقي%20Spiders%20لقد%20جئت%20من%20موقعكم" target="_blank">Message</a>
   </div>
-
 </div>
 
 <script>
-// Loading screen
-window.onload = function(){
+// INTRO REMOVE
+setTimeout(()=>{
+  document.getElementById("intro").style.display="none";
+},5000);
+
+// LOADING REMOVE
+window.onload=()=>{
   setTimeout(()=>{
     document.getElementById("loading").style.display="none";
-  },2000);
+  },2500);
 }
 
-// Changing text
-const texts = ["Welcome To Marrakech","Marrakech RP","Join Our Server"];
-let i = 0;
+// LOGIN
+function enterServer(){
+  document.getElementById("login").style.display="none";
+}
+
+// TEXT CHANGE
+const texts=["Welcome To Marrakech","Marrakech RP","GTA Roleplay Server"];
+let i=0;
 setInterval(()=>{
-  i = (i+1)%texts.length;
-  document.getElementById("changingText").innerText = texts[i];
+  i=(i+1)%texts.length;
+  document.getElementById("changingText").innerText=texts[i];
 },3000);
+
+// PARTICLES
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let p=[];
+for(let i=0;i<80;i++){
+  p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2,d:Math.random()*1});
+}
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#00c2ff";
+p.forEach(o=>{
+ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();});
+update();}
+
+function update(){
+p.forEach(o=>{
+o.y+=o.d;if(o.y>canvas.height){o.y=0;o.x=Math.random()*canvas.width;}});}
+
+setInterval(draw,30);
 </script>
 
 </body>
