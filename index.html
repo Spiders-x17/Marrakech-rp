@@ -3,258 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marrakech RP</title>
+    <title>Marrakech RP - SAMP</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            background: #000;
-            color: white;
-            height: 100vh;
-        }
-
-        /* Video Background */
-        #bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            opacity: 0.4;
-        }
-
-        /* Loading Screen */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            transition: opacity 1s ease-out;
+            min-height: 100vh;
+            overflow: hidden;
+            background: #000;
         }
 
-        .loading.hidden {
-            opacity: 0;
-            pointer-events: none;
+        /* فيديو الخلفية - مراكش و جامع الفنا */
+        #bgVideo {
+            position: fixed;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: -3;
+            object-fit: cover;
+            opacity: 0.35;
+            filter: blur(1px);
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-top: 3px solid #fff;
+        /* طبقة لونية فوق الفيديو */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(193,18,31,0.1) 0%, rgba(0,0,0,0.9) 70%);
+            z-index: -2;
+        }
+
+        /* Loading */
+        #loading {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loader {
+            width: 60px; height: 60px;
+            border: 4px solid #111;
+            border-top: 4px solid #c1121f;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
+            box-shadow: 0 0 20px #c1121f;
         }
-
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        /* Main Content */
+        #loading p { 
+            margin-top: 20px; 
+            color: #c1121f; 
+            font-size: 18px;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* المحتوى الرئيسي */
         .container {
-            position: relative;
-            z-index: 1;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            display: none;
+            background: rgba(10, 10, 10, 0.85);
+            padding: 40px 25px;
+            border-radius: 10px;
+            border: 2px solid #c1121f;
             text-align: center;
-            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 30px rgba(193, 18, 31, 0.4);
         }
 
-        /* Animated Title */
-        .title {
-            font-size: 4rem;
+        /* العنوان المتحرك */
+        #title {
+            font-size: 32px;
+            font-weight: 900;
+            color: #c1121f;
+            margin-bottom: 30px;
+            height: 40px;
+            text-shadow: 0 0 20px rgba(193, 18, 31, 1), 0 0 40px rgba(193, 18, 31, 0.5);
+            transition: opacity 0.4s;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 25px;
+            margin-top: -15px;
+        }
+
+        /* الأزرار */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 6px;
+            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #fff, #ccc, #fff);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: titleGlow 2s ease-in-out infinite alternate, titleChange 4s infinite;
-        }
-
-        @keyframes titleGlow {
-            0% { filter: drop-shadow(0 0 10px #fff); }
-            100% { filter: drop-shadow(0 0 20px #ccc); }
-        }
-
-        @keyframes titleChange {
-            0%, 50% { content: "Marrakech RP"; }
-            50.1%, 100% { content: "Welcome To Marrakech"; }
-        }
-
-        /* Server Link */
-        .server-link {
-            margin: 30px 0;
-            font-size: 1.5rem;
-        }
-
-        .server-link a {
-            color: #fff;
-            text-decoration: none;
-            padding: 15px 30px;
-            border: 2px solid #fff;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .server-link a:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.05);
-        }
-
-        /* Phone Numbers */
-        .phones {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        .phone-btn {
-            background: rgba(0,0,0,0.7);
-            border: 2px solid #fff;
-            color: #fff;
-            padding: 20px 30px;
-            font-size: 1.2rem;
-            border-radius: 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
             cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
             position: relative;
             overflow: hidden;
         }
-
-        .phone-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        
+        .btn:hover {
+            background: #c1121f;
+            border-color: #c1121f;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(193, 18, 31, 0.6);
         }
 
-        .phone-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 5px;
+        .btn-download {
+            background: linear-gradient(145deg, #c1121f, #8b0000);
+            border: 1px solid #ff1a1a;
+            animation: glow 2s infinite;
         }
 
-        /* Download Section */
-        .download-section {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 10;
-            background: rgba(0,0,0,0.8);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.3);
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(193, 18, 31, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(193, 18, 31, 1); }
         }
 
-        .download-btn {
-            display: block;
-            background: linear-gradient(45deg, #fff, #ccc);
-            color: #000;
-            padding: 12px 25px;
-            text-decoration: none;
-            border-radius: 25px;
+        .btn-group { margin: 18px 0; }
+
+        .btn-label {
+            font-size: 13px;
+            color: #c1121f;
+            margin-bottom: 5px;
+            text-align: right;
             font-weight: bold;
-            margin-top: 10px;
-            transition: all 0.3s ease;
         }
 
-        .download-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255,255,255,0.5);
+        .server-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 12px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-    </div>
-
-    <!-- Background Video -->
-    <video id="bg-video" autoplay muted loop>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-portrait-of-a-woman-in-a-sunset-39875-large.mp4" type="video/mp4">
-        <!-- بديل فيديو جامع الفنا -->
-        فيديو غير مدعوم
+    <!-- فيديو الخلفية مراكش -->
+    <video autoplay muted loop playsinline id="bgVideo">
+        <source src="https://videos.pexels.com/video-files/854315/854315-hd_1920_1080_25fps.mp4" type="video/mp4">
     </video>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h1 class="title" id="animatedTitle">Marrakech RP</h1>
-        
-        <div class="server-link">
-            <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" target="_blank">
-                انضم لمجموعة السيرفر
-            </a>
-        </div>
+    <!-- صوت GTA V -->
+    <audio id="bgSound" loop>
+        <source src="https://www.soundboard.com/handler/DownLoadTrack.ashx?track=340525" type="audio/mpeg">
+    </audio>
 
-        <div class="phones">
-            <a href="https://wa.me/212775002021?text=مرحبا%20صديقي%20MOSTAFA%20لقد%20جئت%20من%20موقعكم" 
-               class="phone-btn" target="_blank">
-                775-002021
-                <div class="phone-label">DEV_MOSTAFA</div>
-            </a>
-            
-            <a href="https://wa.me/212645987253?text=مرحبا%20صديقي%20Spiders%20لقد%20جئت%20من%20موقعكم" 
-               class="phone-btn" target="_blank">
-                645-987253
-                <div class="phone-label">SPIDERS_X17</div>
-            </a>
-        </div>
+    <!-- Loading -->
+    <div id="loading">
+        <div class="loader"></div>
+        <p>Marrakech RP Loading...</p>
     </div>
 
-    <!-- Download Section -->
-    <div class="download-section">
-        <h3>📱 تحميل SAMB</h3>
-        <a href="#" class="download-btn">تحميل الآن</a>
-        <small>أقوى سيرفر مع أرقامنا الخاصة</small>
+    <!-- المحتوى -->
+    <div class="container" id="mainContent">
+        <h1 id="title">Marrakech RP</h1>
+        <div class="subtitle">SA:MP Mobile Server</div>
+        
+        <a href="#" class="btn btn-download" onclick="playClick()">
+            📥 تحميل SA-MP Mobile
+        </a>
+
+        <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" class="btn" onclick="playClick()" target="_blank">
+            💬 مجموعة السيرفر
+        </a>
+
+        <div class="btn-group">
+            <div class="btn-label">DEV_MOSTAFA - إدارة السيرفر</div>
+            <a href="https://wa.me/212775002021?text=مرحبا%20صديقي%20%22MOSTAFA%22%20لقد%20جئت%20من%20موقعكم" 
+               class="btn" onclick="playClick()" target="_blank">
+                📞 775-002021
+            </a>
+        </div>
+
+        <div class="btn-group">
+            <div class="btn-label">SPIDERS_X17 - الدعم الفني</div>
+            <a href="https://wa.me/212645987253?text=مرحبا%20صديقي%20%22Spiders%22%20لقد%20جئت%20من%20موقعكم" 
+               class="btn" onclick="playClick()" target="_blank">
+                📞 645-987253
+            </a>
+        </div>
+
+        <div class="server-info">
+            IP: قريباً | Players: 100/100 | Version: 0.3.7
+        </div>
     </div>
 
     <script>
-        // Loading Screen
-        window.addEventListener('load', function() {
+        // لودينغ 3 ثواني
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-            }, 2000);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            }, 3000);
         });
 
-        // Title Animation
-        const titles = ['Marrakech RP', 'Welcome To Marrakech'];
-        let currentTitle = 0;
-        const titleElement = document.getElementById('animatedTitle');
-
+        // العنوان كيتبدل
+        const title = document.getElementById('title');
+        let isFirst = true;
         setInterval(() => {
-            currentTitle = (currentTitle + 1) % titles.length;
-            titleElement.textContent = titles[currentTitle];
-        }, 4000);
+            title.style.opacity = '0';
+            setTimeout(() => {
+                title.textContent = isFirst ? 'Welcome To Marrakech' : 'Marrakech RP';
+                title.style.opacity = '1';
+                isFirst = !isFirst;
+            }, 400);
+        }, 3500);
 
-        // Video Controls
-        const video = document.getElementById('bg-video');
-        video.play().catch(e => console.log('Video autoplay prevented'));
+        // الصوت يخدم مع أول كليك
+        document.body.addEventListener('click', () => {
+            document.getElementById('bgSound').play();
+        }, { once: true });
 
-        // Mute video by default
-        video.muted = true;
+        function playClick() {
+            document.getElementById('bgSound').play();
+        }
     </script>
 </body>
 </html>
