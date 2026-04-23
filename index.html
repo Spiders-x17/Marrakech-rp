@@ -24,7 +24,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), 
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), 
                         url('https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=1920&q=80') center/cover;
             z-index: -2;
             animation: cityMove 30s linear infinite alternate;
@@ -132,20 +132,6 @@
             color: #999;
             margin-bottom: 4px;
         }
-
-        /* Start Button */
-        #startBtn {
-            position: fixed;
-            bottom: 30px;
-            background: #c1121f;
-            padding: 15px 40px;
-            font-size: 18px;
-            border: none;
-            border-radius: 6px;
-            color: #fff;
-            cursor: pointer;
-            z-index: 10000;
-        }
     </style>
 </head>
 <body>
@@ -159,15 +145,28 @@
         <source src="https://www.soundjay.com/buttons/sounds/button-21.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- زر البداية باش يخدم الصوت -->
-    <button id="startBtn" onclick="startSite()">اضغط هنا للدخول</button>
-
     <!-- Loading -->
-    <div id="loading" style="display:none">
+    <div id="loading">
         <div class="loader"></div>
         <p>جاري التحميل...</p>
     </div>
 
     <!-- Main Content -->
     <div class="container" id="mainContent">
-        <h1 id="title">Marrakech RP</
+        <h1 id="title">Marrakech RP</h1>
+        
+        <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" class="btn" onclick="playClick()" target="_blank">
+            مجموعة السيرفر
+        </a>
+
+        <div class="btn-group">
+            <div class="btn-label">DEV_MOSTAFA</div>
+            <a href="https://wa.me/212775002021?text=مرحبا%20صديقي%20%22MOSTAFA%22%20لقد%20جئت%20من%20موقعكم" 
+               class="btn" onclick="playClick()" target="_blank">
+                775-002021
+            </a>
+        </div>
+
+        <div class="btn-group">
+            <div class="btn-label">SPIDERS_X17</div>
+            <a href="https://wa.me/212645987253?text=مرحبا%20صديقي%20%22Spiders%22%20لقد%20جئت%20من%20م
