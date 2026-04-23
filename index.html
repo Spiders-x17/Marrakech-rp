@@ -1,118 +1,167 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marrakech RP</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            background: #000;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marrakech RP</title>
 
-        /* فيديو الخلفية - جامع الفنا */
-        #bgVideo {
-            position: fixed;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            transform: translate(-50%, -50%);
-            z-index: -2;
-            object-fit: cover;
-            filter: brightness(0.4);
-        }
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  color:white;
+  overflow:hidden;
+  background:black;
+}
 
-        /* طبقة غامقة فوق الفيديو */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3);
-            z-index: -1;
-        }
+/* Loading Screen */
+#loading{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  flex-direction:column;
+}
 
-        /* نجوم طايحة من السماء */
-        .star {
-            position: fixed;
-            top: -10px;
-            background: #fff;
-            border-radius: 50%;
-            animation: fall linear infinite;
-            z-index: 0;
-        }
+.loader{
+  border:4px solid #333;
+  border-top:4px solid #00c2ff;
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  animation:spin 1s linear infinite;
+}
 
-        @keyframes fall {
-            to { transform: translateY(105vh) translateX(50px); opacity: 0; }
-        }
+@keyframes spin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
 
-        /* Loading Screen */
-        #loading {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        
-        .loader {
-            width: 50px; height: 50px;
-            border: 3px solid #222;
-            border-top: 3px solid #c1121f;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+/* Background video */
+video{
+  position:fixed;
+  right:0;
+  bottom:0;
+  min-width:100%;
+  min-height:100%;
+  object-fit:cover;
+  opacity:0.25;
+  z-index:-1;
+}
 
-        #loading p { margin-top: 20px; color: #c1121f; font-size: 18px; }
+.header{
+  text-align:center;
+  padding-top:30px;
+  font-size:28px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
 
-        /* Main Container */
-        .container {
-            display: none;
-            background: rgba(15, 15, 15, 0.8);
-            padding: 35px 25px;
-            border-radius: 8px;
-            border: 1px solid #c1121f;
-            text-align: center;
-            width: 90%;
-            max-width: 380px;
-            backdrop-filter: blur(10px);
-            z-index: 1;
-        }
+#changingText{
+  margin-top:10px;
+  font-size:18px;
+  color:#00c2ff;
+}
 
-        /* Animated Title */
-        #title {
-            font-size: 30px;
-            font-weight: bold;
-            color: #c1121f;
-            margin-bottom: 25px;
-            height: 38px;
-            text-shadow: 0 0 15px rgba(193, 18, 31, 0.8);
-            transition: opacity 0.3s;
-        }
+.container{
+  padding:20px;
+  text-align:center;
+}
 
-        /* Buttons */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 13px;
-            margin: 10px 0;
-            background: rgba(30, 30, 30, 0.9);
-            color: #fff;
-            border: 1px solid #
+.card{
+  background:rgba(0,0,0,0.5);
+  margin:10px auto;
+  padding:15px;
+  border-radius:10px;
+  width:90%;
+  max-width:350px;
+}
+
+a{
+  color:#00c2ff;
+  text-decoration:none;
+}
+
+button{
+  background:#00c2ff;
+  border:none;
+  padding:10px;
+  border-radius:8px;
+  color:black;
+  font-weight:bold;
+  margin-top:10px;
+  width:100%;
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div id="loading">
+  <div class="loader"></div>
+  <p>Loading Marrakech RP...</p>
+</div>
+
+<!-- Background Video -->
+<video autoplay muted loop>
+  <source src="marrakech.mp4" type="video/mp4">
+</video>
+
+<!-- Sound -->
+<audio autoplay loop>
+  <source src="sound.mp3" type="audio/mp3">
+</audio>
+
+<div class="header">Marrakech RP</div>
+<div id="changingText">Welcome To Marrakech</div>
+
+<div class="container">
+
+  <div class="card">
+    <h3>Group WhatsApp</h3>
+    <a href="https://chat.whatsapp.com/Gv8hm9WDcRVGA9GoMVDya3?mode=gi_t" target="_blank">
+      Join Server Group
+    </a>
+  </div>
+
+  <div class="card">
+    <h3>DEV_MOSTAFA</h3>
+    <p>775-002021</p>
+    <a href="https://wa.me/775002021?text=مرحبا%20صديقي%20MOSTAFA%20لقد%20جئت%20من%20موقعكم" target="_blank">
+      Message on WhatsApp
+    </a>
+  </div>
+
+  <div class="card">
+    <h3>SPIDERS_X17</h3>
+    <p>645-987253</p>
+    <a href="https://wa.me/645987253?text=مرحبا%20صديقي%20Spiders%20لقد%20جئت%20من%20موقعكم" target="_blank">
+      Message on WhatsApp
+    </a>
+  </div>
+
+</div>
+
+<script>
+// Loading screen
+window.onload = function(){
+  setTimeout(()=>{
+    document.getElementById("loading").style.display="none";
+  },2000);
+}
+
+// Changing text
+const texts = ["Welcome To Marrakech","Marrakech RP","Join Our Server"];
+let i = 0;
+setInterval(()=>{
+  i = (i+1)%texts.length;
+  document.getElementById("changingText").innerText = texts[i];
+},3000);
+</script>
+
+</body>
+</html>
